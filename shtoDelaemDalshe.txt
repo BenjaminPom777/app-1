@@ -1,0 +1,23 @@
+1) edit and create should be on same page V
+    -- it should be different page but same component V
+    -- lets move form to seperate component V
+    
+2) should open form empty or with editable inputs V
+3) on edit should go and update it V
+4) TODO delete todo 
+
+*) add styles
+*) authentication
+*) stripe
+*) deploy
+*) it should be top noch product!
+
+*) sqlite? to easy development and deployment process
+
+what can i learn more:
+autharization,
+deployment,
+node orm? knex? Objection?
+
+
+

@@ -48,6 +48,31 @@ export const saveTodo = async (data) => {
     })
 }
 
+export const updateTodo = async (data) => {
+    return new Promise((resolve, reject) => {
+        if (!data.id) {
+            return reject('no id provided');
+        }
+
+        performQuery(`
+        UPDATE todos
+        SET                
+        title = ?,
+        content = ?
+        WHERE id = ?;
+        
+        `, [data.title, data.content, data.id], (err, results) => {
+            if (err) {
+                return reject(err)
+            }
+            return resolve(results)
+        })
+    })
+}
+
+
+
+
 export const getTodoById = (id) => {
     return new Promise((resolve, reject) => {
         performQuery('select * from todos where id = ?', [id], (err, results) => {

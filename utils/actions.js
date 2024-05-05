@@ -1,31 +1,49 @@
 'use server'
 
-import { revalidatePath } from 'next/cache';
-import { saveTodo } from '@/utils/db'
-import { redirect } from 'next/navigation'
+import { revalidatePath } from 'next/cache'
+import { saveTodo, updateTodo } from '@/utils/db'
+import { redirect, notFound } from 'next/navigation'
 
 function isInvalidText(text) {
-    return !text || text.trim() === '';
+    return !text || text.trim() === ''
 }
 
 export async function submitForm(prevState, formData) {
+
+    const errorMsg = {}
+
     const todoData = {
+        id: formData.get('id'),
         title: formData.get('title'),
         content: formData.get('content'),
+        
     }
 
-    if (isInvalidText(todoData.title) || isInvalidText(todoData.content)) {
-        return {
-            message: 'Invalid input.'
-        }
+
+    if (isInvalidText(todoData.title)) {
+        errorMsg.titleError = "Title cannot be empty"
     }
+    if (isInvalidText(todoData.title)) {
+        errorMsg.contentError = "Title cannot be empty"
+    }
+
+    if (Object.keys(errorMsg).length > 0) {
+        return errorMsg;
+    }
+
+    console.log(todoData)
 
     try {
-        await saveTodo(todoData)
+        if (todoData.id) {
+            await updateTodo(todoData)
+        } else {
+            await saveTodo(todoData)
+        }
     } catch (error) {
-      
+         errorMsg.generalError = 'Something went wrong';
+         return errorMsg;
     }
 
-    revalidatePath('/');
-    redirect('/');
+    revalidatePath('/')
+    redirect('/')
 }
