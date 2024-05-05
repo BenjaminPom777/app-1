@@ -1,22 +1,23 @@
-import Image from "next/image";
+
+
 import Link from "next/link";
-// import { getUsers } from '@/utils/db'
+import { getTodos } from '@/utils/db'
+import Card from "@/app/_components/Card";
 
 
 export default async function Home() {
 
-  // const users = await getUsers();
+  const todos = await getTodos();
   // console.log(users)
   return (
     <main>
-      Main page <br/>
+      Main page <br />
       <Link href="/todo">create Todo</Link>
-      {/* <ul>
-        {users.map((user, index) => {
-          const key = user.id || index;
-          return <li key={key}>{user.first_name}</li>
+      
+        {todos.map((todo) => {    
+          return <Card key={todo.id} todo={todo}/>
         })}
-      </ul> */}
+      
     </main>
   );
 }

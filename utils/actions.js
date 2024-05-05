@@ -1,7 +1,8 @@
 'use server'
 
-import { redirect ,revalidatePath } from 'next/cache';
+import { revalidatePath } from 'next/cache';
 import { saveTodo } from '@/utils/db'
+import { redirect } from 'next/navigation'
 
 function isInvalidText(text) {
     return !text || text.trim() === '';
@@ -13,16 +14,18 @@ export async function submitForm(prevState, formData) {
         content: formData.get('content'),
     }
 
-    console.log(todoData)
-
     if (isInvalidText(todoData.title) || isInvalidText(todoData.content)) {
         return {
             message: 'Invalid input.'
         }
     }
 
-    //    await saveMeal(meal)
-    await saveTodo(todoData)
+    try {
+        await saveTodo(todoData)
+    } catch (error) {
+      
+    }
+
     revalidatePath('/');
     redirect('/');
 }

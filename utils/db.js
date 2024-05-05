@@ -1,8 +1,7 @@
-var mysql = require('mysql');
+const mysql = require('mysql2');
 
 // Create the connection pool
-var pool = mysql.createPool({
-    connectionLimit: 10,
+const pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
     password: 'admin1234',
@@ -21,9 +20,9 @@ function performQuery(query, values, callback) {
 }
 
 
-export const getUsers = () => {
+export const getTodos = () => {
     return new Promise((resolve, reject) => {
-        performQuery('select * from actor', (err, results) => {
+        performQuery('select * from todos', (err, results) => {
             if (err) {
                 reject(err)
             }
@@ -40,7 +39,7 @@ export const saveTodo = async (data) => {
         (title, content)
         VALUES
         (?, ?)
-        `,[data.title, data.content], (err, results) => {
+        `, [data.title, data.content], (err, results) => {
             if (err) {
                 reject(err)
             }
@@ -49,42 +48,16 @@ export const saveTodo = async (data) => {
     })
 }
 
-
-
-export async function submitTodo(prevState, formData) {
-    // const meal = {
-    //   title: formData.get('title'),
-    //   summary: formData.get('summary'),
-    //   instructions: formData.get('instructions'),
-    //   image: formData.get('image'),      
-    //   creator: formData.get('name'),      
-    //   creator_email: formData.get('email'),      
-    // }
-
-    // if(
-    //   isInvalidText(meal.title) ||
-    //   isInvalidText(meal.summary) ||
-    //   isInvalidText(meal.instructions) || 
-    //   isInvalidText(meal.creator) ||
-    //   isInvalidText(meal.creator_email) ||
-    //   !meal.creator_email.includes('@') ||
-    //   !meal.image || meal.image.size === 0
-    // ){
-    //   return {
-    //     message: 'Invalid input.'
-    //   }
-    // }
-
-    //    await saveMeal(meal)
-
-    //    revalidatePath('/meals');
-    //    redirect('/meals');
+export const getTodoById = (id) => {
+    return new Promise((resolve, reject) => {
+        performQuery('select * from todos where id = ?', [id], (err, results) => {
+            if (err) {
+                reject(err)
+            }
+            resolve(results)
+        })
+    })
 }
-
-
-
-
-
 
 
 // Close the connection pool when the application is shutting down
