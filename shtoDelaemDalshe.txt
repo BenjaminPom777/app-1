@@ -4,7 +4,7 @@
     
 2) should open form empty or with editable inputs V
 3) on edit should go and update it V
-4) TODO delete todo 
+4) delete todo 
 
 *) add styles
 *) authentication
@@ -18,6 +18,9 @@ what can i learn more:
 autharization,
 deployment,
 node orm? knex? Objection?
+zod, prisma
 
+
+todo: learn about bind() , refactor with bind instead of invisible formid
 
 

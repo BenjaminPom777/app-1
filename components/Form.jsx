@@ -1,7 +1,7 @@
 'use client'
 
 import { useFormState, useFormStatus } from 'react-dom';
-import { submitForm } from '@/utils/actions';
+import { submitForm } from '@/actions/actions';
 
 const Form = ({ todo }) => {
     const [state, action] = useFormState(submitForm, {

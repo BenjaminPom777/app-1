@@ -2,10 +2,18 @@
 
 import Link from "next/link";
 import { getTodos } from '@/utils/db'
-import Card from "@/app/_components/Card";
+import Card from "@/components/Card";
+import { verifyAuth } from "@/utils/auth";
+import { redirect } from "next/navigation";
 
 
 export default async function Home() {
+
+  const result = await verifyAuth();
+
+  if (!result.user) {
+    return redirect('/signup');
+  }
 
   const todos = await getTodos();
   // console.log(users)

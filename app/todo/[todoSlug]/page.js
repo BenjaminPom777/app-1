@@ -1,4 +1,4 @@
-import Form from '@/app/_components/Form';
+import Form from '@/components/Form';
 import { getTodoById } from '@/utils/db';
 import { notFound } from 'next/navigation';
 

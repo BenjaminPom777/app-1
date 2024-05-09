@@ -1,7 +1,7 @@
 const mysql = require('mysql2');
 
 // Create the connection pool
-const pool = mysql.createPool({
+export const pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
     password: 'admin1234',
@@ -76,6 +76,24 @@ export const updateTodo = async (data) => {
 export const getTodoById = (id) => {
     return new Promise((resolve, reject) => {
         performQuery('select * from todos where id = ?', [id], (err, results) => {
+            if (err) {
+                reject(err)
+            }
+            resolve(results)
+        })
+    })
+}
+
+
+export const saveUser = (email, password) => {
+    return new Promise((resolve, reject) => {
+        performQuery(`
+        INSERT INTO users
+        (email, password)
+        VALUES
+        (? , ?);
+        `, 
+        [email, password], (err, results) => {
             if (err) {
                 reject(err)
             }
