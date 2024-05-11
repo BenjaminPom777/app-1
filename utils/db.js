@@ -32,14 +32,14 @@ export const getTodos = () => {
 }
 
 
-export const saveTodo = async (data) => {
+export const saveTodo = async (data, userid) => {
     return new Promise((resolve, reject) => {
         performQuery(`
         INSERT INTO todos
-        (title, content)
+        (title, content, user_id)
         VALUES
-        (?, ?)
-        `, [data.title, data.content], (err, results) => {
+        (?, ?, ?)
+        `, [data.title, data.content, userid], (err, results) => {
             if (err) {
                 reject(err)
             }
@@ -72,7 +72,6 @@ export const updateTodo = async (data) => {
 
 
 
-
 export const getTodoById = (id) => {
     return new Promise((resolve, reject) => {
         performQuery('select * from todos where id = ?', [id], (err, results) => {
@@ -85,15 +84,28 @@ export const getTodoById = (id) => {
 }
 
 
-export const saveUser = (email, password) => {
+export const saveUser = (email, userName, password) => {
     return new Promise((resolve, reject) => {
         performQuery(`
         INSERT INTO users
-        (email, password)
+        (email, username, password)
         VALUES
-        (? , ?);
-        `, 
-        [email, password], (err, results) => {
+        (?, ?, ?);
+        `,
+            [email, userName, password], (err, results) => {
+                if (err) {
+                    reject(err)
+                }
+                resolve(results)
+            })
+    })
+}
+
+export const getUserByEmail = (email) => {
+    return new Promise((resolve, reject) => {
+        performQuery(`
+        SELECT * from users where email = ?         
+        `, [email], (err, results) => {
             if (err) {
                 reject(err)
             }
@@ -101,6 +113,23 @@ export const saveUser = (email, password) => {
         })
     })
 }
+
+// export const saveUser = (email, password) => {
+//     return new Promise((resolve, reject) => {
+//         performQuery(`
+//         INSERT INTO users
+//         (email, password)
+//         VALUES
+//         (? , ?);
+//         `, 
+//         [email, password], (err, results) => {
+//             if (err) {
+//                 reject(err)
+//             }
+//             resolve(results)
+//         })
+//     })
+// }
 
 
 // Close the connection pool when the application is shutting down

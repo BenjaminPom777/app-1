@@ -10,6 +10,8 @@ const SignUp = () => {
         <form action={formAcion}>
             <label htmlFor="email">email</label>
             <input name="email" id="email" type="email" required></input>
+            <label htmlFor="userName">userName</label>
+            <input name="userName" id="userName" type="userName" required></input>
 
             <label htmlFor="password">password</label>
             <input name="password" id="password" type="password" required></input>

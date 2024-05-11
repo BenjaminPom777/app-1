@@ -3,8 +3,9 @@
 import { useFormState, useFormStatus } from 'react-dom';
 import { submitForm } from '@/actions/actions';
 
-const Form = ({ todo }) => {
-    const [state, action] = useFormState(submitForm, {
+const Form = ({ todo, activeUser }) => {
+    
+    const [state, action] = useFormState(submitForm.bind(null, activeUser), {
         titleError: "",
         contentError: "",
         generalError: ""

@@ -8,7 +8,7 @@ function isInvalidText(text) {
     return !text || text.trim() === ''
 }
 
-export async function submitForm(prevState, formData) {
+export async function submitForm(user, prevState, formData) {
 
     const errorMsg = {}
 
@@ -16,7 +16,7 @@ export async function submitForm(prevState, formData) {
         id: formData.get('id'),
         title: formData.get('title'),
         content: formData.get('content'),
-        
+
     }
 
 
@@ -31,17 +31,16 @@ export async function submitForm(prevState, formData) {
         return errorMsg;
     }
 
-    console.log(todoData)
 
     try {
         if (todoData.id) {
             await updateTodo(todoData)
         } else {
-            await saveTodo(todoData)
+            await saveTodo(todoData, user.id)
         }
     } catch (error) {
-         errorMsg.generalError = 'Something went wrong';
-         return errorMsg;
+        errorMsg.generalError = 'Something went wrong';
+        return errorMsg;
     }
 
     revalidatePath('/')
