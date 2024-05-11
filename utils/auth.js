@@ -63,7 +63,7 @@ export async function updateSession(request) {
     });
     return res;
   } catch (error) {
-    console.log(error)
+    
     await logout();
     return
   }

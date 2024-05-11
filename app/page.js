@@ -10,13 +10,16 @@ import { redirect } from "next/navigation";
 export default async function Home() {
 
   const userSession = await getSession();
-  
-  const todos = await getTodos();
-  // console.log(users)
+  const user = userSession?.user;
+  let todos;
+  if(user?.id){
+     todos = await getTodos(user.id);  
+  }
+  console.log(todos)
   return (
     <main>
       Main page <br />
-      {userSession?.user && (
+      {user?.id && (
         <>
           <Link href="/todo">create Todo</Link>
           {todos.map((todo) => {

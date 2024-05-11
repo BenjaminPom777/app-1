@@ -20,9 +20,9 @@ function performQuery(query, values, callback) {
 }
 
 
-export const getTodos = () => {
+export const getTodos = (userId) => {
     return new Promise((resolve, reject) => {
-        performQuery('select * from todos', (err, results) => {
+        performQuery('select * from todos where user_id = ?', [userId], (err, results) => {
             if (err) {
                 reject(err)
             }

@@ -2,8 +2,7 @@
 
 import Link from 'next/link';
 import { logout } from "@/utils/auth"
-const Header = ({ user }) => {
-  console.log(user)
+const Header = ({ user }) => {  
   return (
     <header>
       <nav>
